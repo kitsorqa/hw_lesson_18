@@ -1,3 +1,5 @@
+import logging
+
 import allure
 from allure_commons._allure import step
 from selene import browser
@@ -15,11 +17,11 @@ def test_add_to_cart_one_product():
         response = api_methods.add_product_to_cart(31)
 
     with step("Получение кук"):
-        cookie_cart = response.cookies.get("Nop.customer")
+        cookie = api_methods.get_cookies(cookies=response.cookies, cookie_name='Nop.customer')
 
     with step("Открытие браузера и применение кук"):
         browser.open("https://demowebshop.tricentis.com/")
-        browser.driver.add_cookie({"name": "Nop.customer", "value": cookie_cart})
+        browser.driver.add_cookie({"name": "Nop.customer", "value": cookie})
         browser.open("https://demowebshop.tricentis.com/")
 
     with step("Открытие каталога книги"):
@@ -40,17 +42,17 @@ def test_add_to_cart_one_product():
         ui_methods.check_price_of_product('1590.00')
 
 
-@allure.title("Покупка у одного товаров нескольких позиций")
+@allure.title("Покупка нескольких позиций одного товара")
 def test_add_to_cart_few_products():
     with step("Добавление товара в корзину"):
         response = api_methods.add_product_to_cart(45, 3)
 
     with step("Получение кук"):
-        cookie_cart = response.cookies.get("Nop.customer")
+        cookie = api_methods.get_cookies(cookies=response.cookies, cookie_name='Nop.customer')
 
     with step("Открытие браузера и применение кук"):
         browser.open("https://demowebshop.tricentis.com/")
-        browser.driver.add_cookie({"name": "Nop.customer", "value": cookie_cart})
+        browser.driver.add_cookie({"name": "Nop.customer", "value": cookie})
         browser.open("https://demowebshop.tricentis.com/")
 
     with step("Открытие каталога книги"):

@@ -10,3 +10,7 @@ def add_product_to_cart(product, quantity=1):
     )
     log_to_allure(response)
     return response
+
+
+def get_cookies(cookies, cookie_name):
+    return cookies.get(cookie_name)
