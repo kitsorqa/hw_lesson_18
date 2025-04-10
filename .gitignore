@@ -129,6 +129,7 @@ celerybeat.pid
 
 # Environments
 allure-results
+tests/allure-results
 .idea
 .env
 .venv
